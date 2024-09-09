@@ -1,0 +1,269 @@
+- type: entity
+  id: WeaponFlamethrower
+  parent: BaseItem
+  name: spray nozzle
+  description: A high-powered spray nozzle used in conjunction with a backpack-mounted water tank.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Weapons/Guns/Basic/spraynozzle.rsi
+    size: Normal
+  - type: Gun
+    projectileSpeed: 20
+    minAngle: 35
+    maxAngle: 35
+    cameraRecoilScalar: 0
+    fireRate: 7
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
+  - type: Appearance
+  - type: ClothingSlotAmmoProvider
+    targetSlot: SUITSTORAGE
+    providerWhitelist:
+      tags:
+      - NozzleBackTank
+
+- type: entity
+  parent: Clothing
+  id: ClothingBackpackFlamethrower
+  name: backpack water tank
+  description: Holds a large amount of fluids. Supplies to spray nozzles in your hands.
+  components:
+  - type: Tag
+    tags:
+    - NozzleBackTank
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    slots: SUITSTORAGE
+    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+  - type: SolutionAmmoProvider
+    solutionId: tank
+    proto: BulletFlamethrower
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 3000 #much water
+        reagents:
+        - ReagentId: Napalm
+          Quantity: 300
+        - ReagentId: ChlorineTrifluoride
+          Quantity: 300
+        - ReagentId: Phlogiston
+          Quantity: 2400
+  - type: SolutionTransfer
+    transferAmount: 10
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: tank
+  - type: RefillableSolution
+    solution: tank
+  - type: DrainableSolution
+    solution: tank
+  - type: ExaminableSolution
+    solution: tank
+
+
+- type: entity
+  id: BulletFlamethrower
+  name: water
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Clickable
+  - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
+  - type: TimedDespawn
+    lifetime: 0.15
+  - type: Projectile
+    damage:
+      types:
+        Heat: 0
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/water_shot.rsi
+    layers:
+    - state: icon
+      map: ["enum.VaporVisualLayers.Base"]
+  - type: Ammo
+    muzzleFlash: null
+  - type: SolutionContainerManager
+    solutions:
+      vapor:
+        maxVol: 50
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.60,-0.60,0.60,0.30"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Appearance
+  - type: VaporVisuals
+  - type: IgniteOnCollide
+    fireStacks: 2
+  - type: IgnitionSource
+    ignited: true
+    temperature: 100
+  - type: EmbeddableProjectile
+
+
+- type: startingGear
+  id: CBURNGearNew
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBrown
+    back: ClothingBackpackMilitarySatchelCBURN
+    mask: ClothingMaskGasSwatcburn
+    eyes: ClothingEyesHudMedSec
+    ears: ClothingHeadsetAltCentCom
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitCBURN
+    shoes: ClothingShoesBootsCombatFilled
+    id: CBURNPDA
+    pocket1: RadioHandheld
+    pocket2: WeaponAntiqueLaser
+    belt: ClothingBeltAssault
+  storage:
+    back:
+    - WeaponShotgunBulldog
+    - BoxShotgunIncendiarycburn
+    - BoxShotgunIncendiarycburn
+    - BoxBodyBag
+    - PillCanisterAmbuzolPlus
+    - PillCanisterAmbuzol
+
+- type: entity
+  parent: ClothingMaskGasExplorer
+  id: ClothingMaskGasSwatcburn
+  name: cburn gas mask
+  description: A elite issue Security gas mask.
+  components:
+  - type: Sprite
+    sprite: Exodus/Clothing/Mask/cburn.rsi
+  - type: Clothing
+    sprite: Exodus/Clothing/Mask/cburn.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    hideOnToggle: true
+
+- type: entity
+  parent: [ClothingShoesMilitaryBase, BaseRestrictedContraband]
+  id: ClothingShoesBootsCombat
+  name: combat boots
+  description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/combatboots.rsi
+  - type: ContainerFill
+    containers:
+      item:
+      - CombatKnife
+  - type: NoSlip
+  - type: Magboots
+
+- type: entity
+  name: shotgun incendiary cartridges dispenser
+  parent: AmmoProviderShotgunShell
+  id: BoxShotgunIncendiarycburn
+  description: A dispenser box full of incendiary cartridges, designed for riot shotguns.
+  components:
+    - type: BallisticAmmoProvider
+      proto: ShellShotgunIncendiary
+      capacity: 32
+    - type: Sprite
+      layers:
+        - state: boxwide
+        - state: shellincendiary
+
+- type: entity
+  name: pill canister
+  parent: PillCanister
+  id: PillCanisterAmbuzolPlus
+  suffix: AmbuzolPlus 5u, 10
+  components:
+  - type: Label
+    currentLabel: Ambuzol Plus 5u
+  - type: StorageFill
+    contents:
+    - id: PillAmbuzolPlus
+      amount: 10
+
+- type: entity
+  name: pill canister
+  parent: PillCanister
+  id: PillCanisterAmbuzol
+  suffix: Ambuzol 5u, 10
+  components:
+  - type: Label
+    currentLabel: Ambuzol 5u
+  - type: StorageFill
+    contents:
+    - id: PillAmbuzol
+      amount: 10
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackMilitarySatchelCBURN
+  name: army satchel
+  description: A tactical satchel for army related needs.
+  components:
+  - type: Sprite
+    sprite: Exodus/Clothing/Back/Satchels/cburn.rsi
+  - type: Storage
+    grid:
+    - 0,0,14,7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.8
+
+- type: randomHumanoidSettings
+  speciesBlacklist: # Corvax-MRP
+    - Diona
+  id: CBURNAgentNew
+  parent: EventHumanoidMindShielded
+  components:
+    - type: Loadout
+      prototypes: [CBURNGearNew]
+      roleLoadout: [ RoleSurvivalEVA ]
+    - type: GhostRole
+      name: ghost-role-information-cburn-agent-name
+      description: ghost-role-information-cburn-agent-description
+      rules: ghost-role-information-nonantagonist-rules
+      raffle:
+        settings: short
+    - type: RandomMetadata
+      nameSegments:
+      - NamesFirstMilitary
+      - NamesLastMilitary
+
+- type: entity
+  id: RandomHumanoidSpawnerCBURNUnitNew
+  name: CBURN Agent
+  suffix: ERTRole
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: cburn
+    - type: RandomHumanoidSpawner
+      settings: CBURNAgentNew
