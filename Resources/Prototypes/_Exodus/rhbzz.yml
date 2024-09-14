@@ -131,8 +131,8 @@
     eyes: ClothingEyesHudMedSec
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitCBURN
-    shoes: ClothingShoesBootsCombatFilled
+    outerClothing: ClothingOuterHardsuitCBURNNew
+    shoes: ClothingShoesBootsCombatcburn
     id: CBURNPDA
     pocket1: RadioHandheld
     pocket2: WeaponAntiqueLaser
@@ -164,17 +164,20 @@
     - Hair
     - Snout
     hideOnToggle: true
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
   parent: [ClothingShoesMilitaryBase, BaseRestrictedContraband]
-  id: ClothingShoesBootsCombat
+  id: ClothingShoesBootsCombatcburn
   name: combat boots
   description: Robust combat boots for combat scenarios or combat situations. All combat, all the time.
   components:
   - type: Sprite
-    sprite: Clothing/Shoes/Boots/combatboots.rsi
+    sprite: Clothing/Shoes/Specific/swat.rsi
   - type: Clothing
-    sprite: Clothing/Shoes/Boots/combatboots.rsi
+    sprite: Clothing/Shoes/Specific/swat.rsi
   - type: ContainerFill
     containers:
       item:
@@ -267,3 +270,27 @@
       state: cburn
     - type: RandomHumanoidSpawner
       settings: CBURNAgentNew
+
+- type: entity
+  parent: ClothingOuterHardsuitCBURN
+  id: ClothingOuterHardsuitCBURNNew
+  name: CBURN exosuit
+  description: A lightweight yet strong exosuit used for special cleanup operations.
+  components:
+  - type: GasTank
+    outputPressure: 101.3
+    air:
+      volume: 20
+      moles:
+        - 10.451303391 # 22% oxygen
+        - 11.600075659 # 78% nitrogen
+        # 32.051379050 total = ~60 min
+      temperature: 293.15
+    tankLowPressure: 30.0
+  - type: Sprite
+    sprite: Exodus/Clothing/OuterClothing/Hardsuits/cburn.rsi
+  - type: Clothing
+    sprite: Exodus/Clothing/OuterClothing/Hardsuits/cburn.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.1
