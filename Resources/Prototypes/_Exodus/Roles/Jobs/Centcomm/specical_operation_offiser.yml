@@ -3,7 +3,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitCentcomOfficerBlack
     back: ClothingBackpackCentcomOfficerFilled
-    mask: ClothingMaskGasDeathSquad
+    mask: ClothingMaskGas
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetAltCentCom
     head: ClothingHeadCapCentcomBlack
