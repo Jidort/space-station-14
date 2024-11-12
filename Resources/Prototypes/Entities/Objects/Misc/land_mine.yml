@@ -74,3 +74,31 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
+
+
+- type: entity
+  name: explosive mine
+  parent: BaseLandMine
+  id: LandMineKapkan
+  components:
+  - type: Ensnaring
+    freeTime: 2.0
+    breakoutTime: 3.5 #all bola should generally be fast to remove
+    walkSpeed: 0.0 #makeshift bola shouldn't slow too much
+    sprintSpeed: 0.0
+    staminaDamage: 100 # Sudden weight increase sapping stamina
+    canThrowTrigger: true
+    canMoveBreakout: true
+    OnStepTrigger: true
+  - type: TriggerOnStepTrigger
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 50
+  - type: LandMine
+    sound:
+        path: /Uploaded/Zima/Kapkan.ogg
+        params:
+            maxDistance: 10
+  - type: Item
+    size: Normal

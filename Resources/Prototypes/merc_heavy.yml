@@ -1,0 +1,798 @@
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorHeavyMerc
+  name: Тяжелая броня наёмника
+  description: Броня, пахнущая как джунгли.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/merc_heavy.rsi
+  - type: Clothing
+    sprite: /Textures/Test/merc_heavy.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.3
+        Slash: 0.3
+        Piercing: 0.3
+        Heat: 0.3
+        Caustic: 0.75
+  - type: GroupExamine
+    slots: WITHOUT_POCKET
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: AllowSuitStorage
+
+- type: entity
+  name: ПКП
+  id: WeaponLightMachineGunPKP
+  parent: BaseWeaponLightMachineGun
+  description: Главное оружие консерваторов из СССП
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/pkp.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-3
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: GunRequiresWield
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: Gun
+    minAngle: 10
+    maxAngle: 25
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 5
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePKPBox
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePKPBox
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+
+- type: entity
+  id: MagazinePKPBox
+  name: "Короб для ПКП (30. винтовочный)"
+  parent: BaseMagazineLightRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazinePKPBox
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifle
+    capacity: 100
+  - type: Item
+  - type: Sprite
+    sprite: /Textures/Test/pkpbox.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 8
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineSaiga
+  name: магазин дробовика (.50 дробь)
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - MagazineShotgunSaiga
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - ShellShotgun
+    capacity: 8
+    soundRack:
+      path: /Audio/Corvax/Weapons/Guns/Cock/shotgun_cock.ogg # Corvax-Guns
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: /Textures/Test/Ammunition/Magazines/1270/10.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineShotgunSaiga
+  name: магазин дробовика (.50 дробь)
+  suffix: Патроны, летал , Evin
+  parent: MagazineSaiga
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgun
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineSVD
+  name: магазин винтовки (.60 )
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - MagazineMagnumSVD
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgeAntiMateriel
+    capacity: 6
+    soundRack:
+      path: /Audio/Corvax/Weapons/Guns/Cock/shotgun_cock.ogg # Corvax-Guns
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: /Textures/Test/Ammunition/Magazines/754/svd10.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+- type: entity
+  id: MagazineMagnumSVD
+  name: магазин винтовки (.60)
+  suffix: Патроны, Evin
+  parent: MagazineSVD
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeAntiMateriel
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  name: USP-S
+  parent: BaseWeaponPistol
+  id: WeaponPistolUSP
+  suffix: Пистолет, Evin
+  description: Бесшумный убийца для настоящих профи. Использует патроны .35
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Pistols/usp_s.rsi
+    scale: 0.75,0.75
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 6
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+      params:
+        volume: -4
+    availableModes:
+    - SemiAuto
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolUsp
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolUsp
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessUsp
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessUsp
+
+- type: entity
+  name: VSSK14
+  parent: WeaponRifleSVD
+  id: WeaponSniperVssk144
+  suffix: Винтовка, Evin
+  description: Портативное противотанковое ружье. Стреляет бронебойными снарядами калибра 14,5 мм. Использует противотанковые боеприпасы калибра .60.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Snipers/vssk.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: /Textures/Test/Snipers/vssk.rsi
+  - type: Gun
+    fireRate: 3
+    soundGunshot:
+      path: /Audio/Test/Weapons/vssk14.ogg
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: Appearance
+
+- type: entity
+  name: камуфляжная беретта
+  parent: BaseWeaponSniper
+  id: WeaponSniperbarrett
+  suffix: Винтовка, Evin
+  description: Ого! Она невидимая...
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Snipers/barrett.rsi
+  - type: Clothing
+    sprite: /Textures/Test/Snipers/barrett.rsi
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeAntiMateriel
+    capacity: 5
+    proto: CartridgeAntiMateriel
+
+- type: entity
+  name: АВМ
+  parent: WeaponRifleSVD
+  suffix: Винтовка, Evin
+  id: WeaponRifleAWP
+  description: Старая добрая снайперская винтовка, способная стрелять патронами калибра .45 Магнум. Обладает высокой точностью и мощным уроном на средних и дальних дистанциях.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Snipers/AWP.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  name: ВПО-132 СВД Тактическая
+  parent: BaseItem
+  suffix: Винтовка, Evin
+  id: WeaponRifleSVD
+  description: Модифицированная снайперская винтовка, способная стрелять патронами калибра .60 крупнокалиберной пулей. Обладает высокой точностью и мощным уроном на средних и дальних дистанциях.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Snipers/svd.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Large
+  - type: Clothing
+    sprite: /Textures/Test/Snipers/svd.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg # Corvax-Guns
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineMagnumSVD
+        priority: 6
+        whitelist:
+          tags:
+          - MagazineMagnumSVD
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineAmmoProvider
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 2500
+
+# █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+# █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+# ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —  ДРОБОВИКИ —
+
+- type: entity
+  name: ВП-130 Сайга Тактическая
+  parent: BaseItem
+  suffix: Дробовик, Evin
+  id: WeaponShotgunSaiga
+  description: Магазинный дробовик для ближнего боя, использует патроны калибра .50. Отличается высокой огневой мощью и эффективностью на коротких дистанциях. Намного более лучше оружие чем Сайга такого же типа.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Shotguns/saigapro.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Large
+  - type: Clothing
+    sprite: /Textures/Test/Shotguns/saigapro.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Corvax/Weapons/Guns/Gunshots/shotgun_auto.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineShotgunSaiga
+        priority: 8
+        whitelist:
+          tags:
+          - MagazineShotgunSaiga
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineAmmoProvider
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 2500
+
+- type: entity
+  name: ВП-133 Сайга
+  parent: WeaponShotgunSaiga
+  suffix: Дробовик, Evin
+  id: WeaponShotgunSaiga12
+  description: Магазинный дробовик для ближнего боя, использует патроны калибра .50. Отличается высокой огневой мощью и эффективностью на коротких дистанциях.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Shotguns/saiga.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 2
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Corvax/Weapons/Guns/Gunshots/shotgun_auto.ogg # Corvax-Guns
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+
+# █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+# █████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████
+# РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —  РЕВОЛЬВЕРЫ —
+
+- type: entity
+  name: RSH18
+  parent: WeaponRevolverMateba
+  suffix: Пистолет, Evin
+  id: WeaponRevolverRsh18
+  description: Культовое оружие. Использует патроны "Магнум" 45-го калибра.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Revolvers/rsh18.rsi
+  - type: Clothing
+    sprite: /Textures/Test/Revolvers/rsh18.rsi
+  - type: Gun
+    fireRate: 3
+    soundGunshot:
+      path: /Audio/Test/Weapons/rsh18.ogg
+
+- type: entity
+  name: KR51
+  parent: BaseWeaponRifle
+  suffix: Автоматы, Evin
+  id: EvinWeaponRifleKR51
+  description: Бесшумная автоматическая винтовка. Использует патроны 25-го калибра
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Rifles/kr51.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 5
+    soundGunshot:
+      path: /Audio/Test/Weapons/heavy_shot_suppressed.ogg
+      params:
+        volume: -2
+  - type: ChamberMagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineCaselessRifleShort
+        insertSound: /Audio/Weapons/Guns/MagIn/hpistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/hpistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineCaselessRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeCaselessRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeCaselessRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+- type: entity
+  name: ASH9
+  parent: BaseWeaponRifle
+  id: WeaponRifleAsh9
+  suffix: Автомат, Evin
+  description: Бесшумная автоматическая винтовка. Использует патроны 20-го калибра
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Rifles/ash9.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    fireRate: 7
+    soundGunshot:
+      path: /Audio/Test/Weapons/ash9.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+
+- type: entity
+  name: АКС-74У
+  parent: WeaponSubMachineGunAtreides
+  id: RedWeaponRifleAks74Y
+  suffix: Автомат, Evin
+  description: Модификация АК-74, спустя 1000 лет ничего новее не придумали. Обладает высокой скорострельностью, но маленькой проникающей способностью
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/SMG/akc.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Gun
+    minAngle: 8
+    maxAngle: 16
+    fireRate: 4
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+  - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineAks74Y
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineAks74Y
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: Cartridge545Aks74Y
+        priority: 1
+        whitelist:
+          tags:
+            - Cartridge545Aks74Y
+
+
+- type: entity
+  name: ВПО-123 AK Тактический
+  suffix: Автомат, Evin
+  parent: WeaponRifleVeprTac
+  id: WeaponRifleAKTaktick
+  description: Модифицированный автомат Калашникова, предназначенный для боевых операций в условиях ближнего и среднего боя.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Rifles/chineserifle.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  name: ПП Витязь
+  parent: BaseWeaponRifle
+  id: WeaponSmgVityaz
+  suffix: Автомат, Evin
+  description: Пистолет пулемет витязь, стоит на вооружении у синдиката.
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/SMG/vityazbel.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: /Textures/Test/SMG/vityazbel.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineRifle
+        insertSound: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineRifle
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeRifle
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance
+
+
+- type: entity
+  name: ВПО-129 Тактический
+  suffix: Автомат, Evin
+  parent: WeaponRifleAk
+  id: WeaponRifleVeprTac
+  description: Карабин ВПО-129 — универсальный автомат для тактических операций, обладает высокой точностью и низкой отдачей. Идеален для боев на близкой и средней дистанции. Использует патроны .30 винтовочный
+  components:
+  - type: Sprite
+    sprite: /Textures/Test/Snipers/vepr-tac.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: /Textures/Test/Snipers/vepr-tac.rsi
+  - type: Gun
+    fireRate: 6
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Test/Weapons/Rifles/RifleVeprTac.ogg
+  - type: StaticPrice
+    price: 2500
+
+
+- type: Tag
+  id: MagazinePKPBox
+
+- type: Tag
+  id: MagazineMagnumSVD
+
+- type: Tag
+  id: MagazineShotgunSaiga
+
+- type: Tag
+  id: MagazinePistolUsp
+
+- type: Tag
+  id: CartridgeCaselessUsp
+
+
+- type: entity
+  id: BulletCaselessUSP
+  name: Патрон (.40 ACP)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 22
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgeCaselessUsp
+
+- type: entity
+  id: CartridgeCaselessUsp
+  name: Патрон (.40 ACP)
+  parent: BaseCartridgeCaselessRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletCaselessUSP
+
+- type: entity
+  id: MagazinePistolUsp
+  name: Автопистолетный магазин (.40 ACP)
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazinePistolUsp
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeCaselessUsp
+    proto: CartridgeCaselessUsp
+    capacity: 12
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+
+- type: entity
+  id: MagazineAks74Y
+  name: "Магазин (5.45)"
+  parent: BaseMagazineCaselessRifle
+  components:
+  - type: Tag
+    tags:
+      - MagazineAks74Y
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - Cartridge545Aks74Y
+    proto: Cartridge545Aks74Y
+    capacity: 30
+  - type: Sprite
+    sprite: /Textures/Test/Ammunition/Magazines/545/aks.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+
+- type: entity
+  id: Bullet545Aks74Y
+  name: Патрон (5.45)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 30
+  - type: Tag
+    tags:
+      - Cartridge
+      - Cartridge545Aks74Y
+
+- type: entity
+  id: Cartridge545Aks74Y
+  name: Патрон (5.45)
+  parent: BaseCartridgeCaselessRifle
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet545Aks74Y
+
+- type: Tag
+  id: MagazineAks74Y
+
+- type: Tag
+  id: Cartridge545Aks74Y
